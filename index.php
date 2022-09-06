@@ -31,10 +31,10 @@ include_once "base.php";
 		<div id="title">
 			<?=date(" m 月 d 日 l");?> | 今日瀏覽: <?=$Total->find(['date'=>date("Y-m-d")])['total'];?> | 累積瀏覽: 
 			<?=$Total->math('sum','total');?>
-			<a href="index.php">回首頁</a>
+			<a href="index.php" style="float: right;">回首頁</a>
 		</div>
 		<div id="title2">
-
+			<img src="./icon/02B01.jpg" title="健康促進網-回首頁">
 		</div>
 		<div id="mm">
 			<div class="hal" id="lef">
@@ -46,7 +46,9 @@ include_once "base.php";
 			</div>
 			<div class="hal" id="main">
 				<div>
-
+					<span style="width:80%; display:inline-block;">
+						<marquee>歡迎積極投稿電子報，讓電子報成為交流的園地</marquee>
+					</span>
 					<span style="width:18%; display:inline-block;">
 						<?php
 						if(isset($_SESSION['user'])){
@@ -88,7 +90,7 @@ include_once "base.php";
 			</div>
 		</div>
 		<div id="bottom">
-			本網站建議使用：IE9.0以上版本，1024 x 768 pixels 以上觀賞瀏覽 ， Copyright © 2012健康促進網社群平台 All Right Reserved
+			本網站建議使用：IE9.0以上版本，1024 x 768 pixels 以上觀賞瀏覽 ， Copyright © 2022健康促進網社群平台 All Right Reserved
 			<br>
 			服務信箱：health@test.labor.gov.tw<img src="./icon/02B02.jpg" width="45">
 		</div>
@@ -97,3 +99,11 @@ include_once "base.php";
 </body>
 
 </html>
+
+<script>
+	function logout(){
+		$.post('./api/logout.php',()=>{
+			location.reload()
+		})
+	}
+</script>

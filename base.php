@@ -57,7 +57,7 @@ class DB{
 
     // find()
     function find($id){
-        $sql="select * from $this->tabl3 where ";
+        $sql="select * from $this->table where ";
         if(is_array($id)){
             foreach($id as $key => $val){
                 $tmp[]="`$key`='$val'";

@@ -19,15 +19,24 @@
         ?>
             <tr>
                 <td class="clo title" style="cursor:pointer"><?=$row['title'];?></td>
-                <td>
-                    <span class="summary"><?=mb_substr($row['text'],0,20);?></span>
+                <td class="pop">
+                    <span class="summary"><?=mb_substr($row['text'],0,20);?>...</span>
                     <div class="modal"><?=nl2br($row['text']);?></div>
                 </td>
-                <td></td>
+                <td class="ct">
+                    <span><?php print($row['good']) ;?></span>個人說<img src="./icon/02B03.jpg" style="width:25px">
+                    <?php 
+                        if(isset($_SESSION['user'])){
+                            if($Log->math('count','id',['news'=>$row['id'],'user'=>$_SESSION['user']])>0){
+                                echo "<a class='great' href='#' data-id='{$row['id']}'>收回讚</a>";
+                            }else{
+                                echo "<a class='great' href='#' data-id='{$row['id']}'>讚</a>";
+                            }
+                        }
+                    ?>
+                </td>
             </tr>
         <?php
-            
-
             }
         ?>
         </tr>
@@ -42,13 +51,42 @@
 
             for($i=1;$i<=$pages;$i++){
                 $fontsize=($now==$i)?'24px':'16px';
-                echo "<a href='?do=news&p={$i}' style='font-size:{$fontsize}'> $i </a>";
+                echo "<a href='?do=pop&p={$i}' style='font-size:{$fontsize}'> $i </a>";
             }
 
             if(($now+1)<=$pages){
                 $p=$now+1;
-                echo "<a href='?do=news&p={$p}'> > </a>";
+                echo "<a href='?do=pop&p={$p}'> > </a>";
             }
         ?>
     </div>
 </fieldset>
+
+<script>
+    $('.title').hover(
+     function (){
+         // console.log($(this).parent()); 
+         $(this).next().find('.modal').show();
+        },
+    function (){
+         // console.log($(this).parent()); 
+         $(this).next().find('.modal').hide();
+        }
+
+    )
+
+    $(".great").on("click",function(){
+        let type=$(this).text(); //讚or收回讚
+        let num=parseInt($(this).siblings('span').text());
+        let id=$(this).data('id');
+        $.post('./api/good.php',{type,id},()=>{
+            if(type==='讚'){
+                $(this).text('收回讚')
+                $(this).siblings('span').text(num+1)
+            }else{
+                $(this).text('讚')
+                $(this).siblings('span').text(num-1)
+            }
+        })
+    })
+</script>

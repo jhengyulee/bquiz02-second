@@ -71,7 +71,7 @@ class DB{
 
     // del()
     function del($id){
-        $sql="delete * from $this->tabl3 where ";
+        $sql="delete from $this->table where ";
         if(is_array($id)){
             foreach($id as $key => $val){
                 $tmp[]="`$key`='$val'";
